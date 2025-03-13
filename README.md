@@ -1,5 +1,5 @@
 # daily-concept-learning
-하루에 개념 1개씩 학습하자! 
+하루에 개념 1개씩 학습하자! 자꾸 까먹는다! 잊은 것도 다시보자!
 
 ## 2024년 9월
 - 2024년 9월 1일: [스프링 Interceptor](https://github.com/hiblue02/concept-learning-daily/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-interceptor)
@@ -29,16 +29,9 @@
 - 2024년 9월 21일: [스프링 이벤트](https://github.com/hiblue02/daily-concept-learning/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
 - 2024년 9월 26일: [스프링 웹플럭스](https://github.com/hiblue02/daily-concept-learning/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9B%B9%ED%94%8C%EB%9F%AD%EC%8A%A4)
 - 2024년 9월 26일: [스프링 @WebMvcTest @WebFluxTest](https://github.com/hiblue02/daily-concept-learning/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-webmvctest-webfluxtest)
-- 2024년 9월 21일: [스프링 클라우드 config]
-- 2024년 9월 22일: [스프링 클라우드 seluth, zipkin, opentelemetery]
-- 2024년 9월 25일: [스프링 Cors]
-- 2024년 9월 26일: [코틀린 let]
-- 2024년 9월 27일: [코틀린 스코프]
-- 2024년 9월 28일: [코틀린 위임]
-- 2024년 9월 29일: [코틀린 시퀀스와 컬렉션]
-- 2024년 9월 29일: [코틀린 object, any]
-- 2024년 9월 30일: [코틀린 lateinit]
-- 2024년 9월 30일: [코틀린 ``]
+
+## 2025년 3월
+- 2025년 3월 13일: [스프링 트랜잭션] 
 
 
 공부해야 되는 개념들....
@@ -50,3 +43,15 @@
 - lettuce 라이브러리
 - 리엑티브 프로그래밍
 - 논블로킹 방식
+-   
+- 2024년 9월 21일: [스프링 클라우드 config]
+- 2024년 9월 22일: [스프링 클라우드 seluth, zipkin, opentelemetery]
+- 2024년 9월 25일: [스프링 Cors]
+- 2024년 9월 26일: [코틀린 let]
+- 2024년 9월 27일: [코틀린 스코프]
+- 2024년 9월 28일: [코틀린 위임]
+- 2024년 9월 29일: [코틀린 시퀀스와 컬렉션]
+- 2024년 9월 29일: [코틀린 object, any]
+- 2024년 9월 30일: [코틀린 lateinit]
+- 2024년 9월 30일: [코틀린 ``]
+
