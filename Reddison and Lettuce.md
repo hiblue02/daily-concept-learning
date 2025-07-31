@@ -42,7 +42,7 @@ Redis와 연결(통신)에 Netty를 사용한다.
 - 상태변경을 감지하면 센티널에 질의해 새로운 마스터노드의 정보를 받아온다. 새로운 마스터 노드로 커넥션을 바꾼다. 
 
 ### 클러스터 모드
-1) 연결 할 때 `CLUSTER SLOTS`으로 해시슬롯 정보를 캐싱, 리디렉션
+1) 연결 할 때 `CLUSTER SLOTS`으로 해시슬롯 정보를 캐싱, 리디렉션
 2) 해시슬롯에 따라 명령어를 라우팅한다. (다중 Key Command, 전체 노드 Select Command)
 
 ### 명령어 재실행 / 노드 재연결
@@ -106,14 +106,14 @@ client.shutdown();
 
 ### 클러스터 모드
 https://redis.github.io/lettuce/ha-sharding/#redis-cluster
-1) 연결 할 때 `CLUSTER SLOTS`으로 해시슬롯 정보를 캐싱한다. 
+1) 연결 할 때 `CLUSTER SLOTS`으로 해시슬롯 정보를 캐싱한다. 
 2) 해시슬롯에 따라 명령어를 라우팅한다. (다중 Key Command, 전체 노드 Select Command)
 3) MOVE/ASK 응답 혹은 연결이 끊기면 토폴로지 정보를 갱신하거나, 주시적으로 토폴로지 정보를 갱신한다. (기본값은 OFF, 활성화해줘야 함)
 
 ### 명령어 재실행 / 노드 재연결
 https://redis.github.io/lettuce/advanced-usage/#message-ordering
 1) at-least-once가 기본값으로 연결 장애가 복구되면 버퍼에 저장되어 있던 명령어가 실행된다.
-2) ConnectionWatchDog ❓자료를 못찾겠다. https://github.com/redis/lettuce/blob/371beb09547e85f8e981c1c4ebb70c3e3179d3d2/src/main/java/io/lettuce/core/protocol/ConnectionWatchdog.java#L62
+2) ConnectionWatchDog ❓자료 못찾겠다. https://github.com/redis/lettuce/blob/371beb09547e85f8e981c1c4ebb70c3e3179d3d2/src/main/java/io/lettuce/core/protocol/ConnectionWatchdog.java#L62
     </td>
   </tr>
 </table>
