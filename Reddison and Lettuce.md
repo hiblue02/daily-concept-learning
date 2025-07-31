@@ -54,6 +54,7 @@ https://redisson.pro/docs/fault-tolerance-and-recovery/
 
     
 ## 📌 Lettuce
+https://github.com/redis/lettuce/wiki
 ### Java 기본 저수준 Redis Client
 - Redis 명령어를 그대로 사용한다.
 - 반환 값은 기본형이며, 객체 직렬/역직렬화를 제공하지 않는다. (6.5버전 부터는 JsonObject를 지원한다.)
