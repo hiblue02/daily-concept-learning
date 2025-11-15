@@ -1,7 +1,8 @@
 # daily-concept-learning
 자꾸 까먹는다. 꾸준히, 다시보자.
 
-## 2024년 9월
+<details>
+<summary>2024년 9월</summary>
 - 2024년 9월 1일: [스프링 Interceptor](https://github.com/hiblue02/concept-learning-daily/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-interceptor)
 - 2024년 9월 2일: [스프링 TransactionSyncronization](https://github.com/hiblue02/concept-learning-daily/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-transactionsynchronization)
 - 2024년 9월 3일: [카프카 오프셋](https://github.com/hiblue02/concept-learning-daily/blob/main/%EC%B9%B4%ED%94%84%EC%B9%B4.md#%EC%B9%B4%ED%94%84%EC%B9%B4-offset)
@@ -29,6 +30,8 @@
 - 2024년 9월 21일: [스프링 이벤트](https://github.com/hiblue02/daily-concept-learning/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
 - 2024년 9월 26일: [스프링 웹플럭스](https://github.com/hiblue02/daily-concept-learning/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9B%B9%ED%94%8C%EB%9F%AD%EC%8A%A4)
 - 2024년 9월 26일: [스프링 @WebMvcTest @WebFluxTest](https://github.com/hiblue02/daily-concept-learning/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-webmvctest-webfluxtest)
+</details>
+
 
 ## 2025년 3월
 - 2025년 3월 13일: [스프링 트랜잭션] 
