@@ -1,8 +1,14 @@
 # daily-concept-learning
 자꾸 까먹는다. 꾸준히, 다시보자.
 
+
 <details>
-<summary>2024년 9월</summary>
+<summary>2025년</summary>
+
+</details>
+<details>
+<summary>2025년</summary>
+  
 - 2024년 9월 1일: [스프링 Interceptor](https://github.com/hiblue02/concept-learning-daily/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-interceptor)
 - 2024년 9월 2일: [스프링 TransactionSyncronization](https://github.com/hiblue02/concept-learning-daily/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81.md#%EC%8A%A4%ED%94%84%EB%A7%81-transactionsynchronization)
 - 2024년 9월 3일: [카프카 오프셋](https://github.com/hiblue02/concept-learning-daily/blob/main/%EC%B9%B4%ED%94%84%EC%B9%B4.md#%EC%B9%B4%ED%94%84%EC%B9%B4-offset)
