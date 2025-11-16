@@ -1,5 +1,5 @@
 ## SQL 튜닝
-> SQL 전문가 가이드를 참고해 작성하였습니다. 
+> SQL 전문가 가이드(2020년 개정판)를 참고해 작성하였습니다. 
 
 ### 인덱스 튜닝
 ####  CASE 1: 인덱스 칼럼을 가공하지 않는다. (p563)
@@ -81,9 +81,88 @@ select * from employees
 
 ### 조인 튜닝
 #### CASE 5: 1:M 조인 결과를 1에 맞춰 그룹핑해야 된다면, 인라인 뷰를 활용한다. (p.610)
+[예시] 1:M 조인에서 1의 갯수가 작다면, M을 그룹핑해서 조인되는 row 수를 줄인다. 
+```sql
+select a.product_id, a.product_name, count(b.order_id), sum(b.order_price)
+    from products a
+        inner join orders b 
+            on a.product_id = b.product_id
+            and b.tx_dt between '20220101' and '20221231'
+     group by a.product_id, a.product_name;
+ ```
+[튜닝 방안] 인라인 뷰를 활용해 1의 갯수를 줄인다. 
+```sql
+select a.procduct_id, a.product_name, b.order_count, b.sum
+from products a
+    inner join 
+        (select product_id, count(order_id) as order_count, sum(order_price) as sum
+         from products 
+         where tx_dt between '20220101' and '20221231')  b
+    on a.product_id = b.product_id
+```
 #### CASE 6: 배타적 관계에 있는 테이블이면 union all 대신 outer join을 활용한다. (p613)
+[예시] 
+```sql
+ select a.order_id, a.order_date, b.completed_at, b.canceled_at
+        from orders a inner join sell_orders b 
+        on a.order_id = b.order_id
+        and a.order_type = 'SELL'
+        and a.tx_dt between '20220101' and '20221231'
+ union all
+    select a.order_id, a.order_date, b.completed_at, b.canceled_at
+        from orders a inner join buy_orders b
+            on a.order_id = b.order_id
+            and a.order_type = 'BUY'
+            and a.tx_dt between '20220101' and '20221231'
+``` 
+[튜닝 방안]
+```sql
+select a.order_id
+     , a.order_date
+     , isnull(b.completed_at, c.completed_at)
+     , isnull(b.canceled_at, c.canceled_at)
+        from orders a 
+            left join sell_orders b on (case when order_type='SELL' then a.order_id end) = b.order_id
+            left join buy_orders b on (case when order_type='BUY' then a.order_id end) = c.order_id
+            and a.tx_dt between '20220101' and '20221231'
+``` 
 #### CASE 7:  조건절 이행을 이용해 조인 데이터 양을 줄인다. (p663)
+[예시]
+```sql
+select a.employee_id, a.employee_name, b.department_name
+    from employees a
+        inner join departments b
+            on a.department_id = b.department_id
+            and b.department_id = 10
+```
+[튜닝 방안]
+```sql
+select a.employee_id, a.employee_name, b.department_name
+    from employees a
+        inner join departments b
+            on a.department_id = b.department_id
+            and b.department_id = 10
+            and a.department_id = 10
+```
 #### CASE 8: OR 조건절 대신 union all을 활용한다. (p665)
+
+옵티마이저 or Expansion, or 조건인 두 칼럼이 각각 다른 index를 사용하는 경우 
+
+[예시]
+```sql
+select * from employees
+         where job = 'CLERK'
+            or department_id = 20;
+```
+[튜닝 방안] 중복이 생길 수 있다면, union을 사용한다. 
+```sql
+select * from employees
+         where job = 'CLERK'
+union all
+select * from employees
+         where department_id = 20
+         and (job <> 'CLERK' or job is null);
+```
 ### 기타 튜닝
 #### CASE 9: UNION 대신 UNION ALL을 활용한다. (p684)
 #### CASE 10: Distinct 대신 Exists를 활용한다. (p686)
