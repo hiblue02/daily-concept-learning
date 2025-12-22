@@ -7,15 +7,11 @@
 | JVM   | Java Virtual Machine  | class(바이트코드) 파일을 읽어 실행하는 엔진 (Class Loader, Runtime Data Area, Execution Engine, Garbage Collector) | 
 | javac | Java Complier | 자바(java)를 바이트코드 (class)로 변환하는 도구                                                                   | 
 
-* Java 11 부터 JRE는 없어지고, JDK로 통합되었다. 
-* 
+* Java 11 부터 JRE는 없어지고, JDK로 통합되었다.
 ```mermaid
 graph TB
     subgraph JDK["JDK (Java Development Kit)"]
-        direction LR
-        javac["javac (Java Compiler)"]
-        javadoc["javadoc - API 문서"]
-        jar["jar - 아카이브 패키징 도구"]
+        javac["javac (Java Compiler)"]~~~javadoc["javadoc - API 문서"]~~~jar["jar - 아카이브 패키징 도구"]
         
         subgraph JRE["JRE (Java Runtime Environment)"]
             stdlib["표준 라이브러리<br/>(Java API)"]
@@ -29,5 +25,17 @@ graph TB
             end
         end
     end
-
 ```
+
+### JVM Memory Area (Runtime Data Area)
+| name | thread scope | Contents                                   | explain               | 
+| -- |--------------|--------------------------------------------| --- |
+| Method Area | all          | 클래스 메타데이터, static 변수, 상수, JIT 캐싱           |
+| Heap | all          | 인스턴스 변수                                    | Garbage Collector가 관리 | 
+| Stack | thread       | 지역변수, 매개변수, 참조주소값, 메서드 호출 정보 (Stack Frame) |  LIFO 구조 |
+| PC Register | thread       | 현재 실행 중인 JVM 명령어 주소, 다음에 실행할 명령어 위치        | 스레드가 어디를 실행해야 하는지 추적 | 
+| Native Method Stack | thread       | Native 메소드, JNI 호출정보                       | Java가 아닌 다른 언어 | 
+
+* 인스턴스 변수(Instance Variable): 클래스 내부에서 선언되지만, 메소드 바깥에 위치하는 변수
+* 객체 인스턴스(Collection, 배열, String ...) 의 주소값은 Stack에, 실제 값은 Heap에 저장된다.
+* 스프링 ThreadLocal은 Heap에 저장된다. 각 Thread가 독립적인 Map을 가지고 있어 스레드 안정성이 보장된다.  
