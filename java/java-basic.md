@@ -70,4 +70,23 @@ Throwable (최상위)
 > 스프링에서 CheckedException이 발생하면, 롤백되지 않는다. 비즈니스 적인 예외로 판단하기 때문에 (다른 흐름으로 처리해야 한다고 본다), 커밋한다.
 > CheckedException을 사용하면 try-catch문을 써야하고, 실제 업무에선 예외가 발생하면 롤백해야 하는 경우가 대부분이다. 최근에는 CheckedException을 지양하는 추세다
 
+### finalize 와 try-with-resource
+#### finalize()
+1. GC에 의해 메모리에서 제거되기 직전에 호출되는 callback method다 
+2. 객체가 사용하고 있는 자원(파일IO등)을 해제하기 위해 사용되었지만, 아래 사유로 java 9부터 deprecated 되었다. 
+   1. 실행 보장 없음: GC가 언제 동작할지 알 수 없음
+   2. 성능저하: 메모리 회수 속도 저하 (finalize가 정의된 객체는 즉시 삭제 안되고, Finalizer Queue라는 대기열에 저장된다. 별도 스레드에서 큐의 작업을 하나씩 실행한다. 다음 GC 사이클이 동작할 때 finalize()까지 실행되었는지를 판단하고 삭제한다.)
+   3. 예외 발생 위험: finalize()에서 예외가 발생하면 JVM은 예외를 무시한다. (자원이 닫히지 않을 수 있다.) finalize()에서 자기를 static 변수에 할당해버리면, 객체가 수거되지 않는다. (좀비) 
+#### try-with-resouce
+java7부터 도입된 기능으로, try 구문을 벗어나면 자동으로 close() 메소드가 호출되어 자원이 닫힌다. 
+`try-catch-finally` 구문을 사용하면, finally에서 닫아주어야 했고, 다른 오류가 발생하면 조치할 수 없었지만, `try-with-resouce`에서는 exception이 발생하면 close()를 무조건 호출하고 catch영역이 실행된다. 
+AutoCloseable를 구현해야 한다. 
+```java
+try (FileOutputStream fos = new FileOutputStream("test.txt")) {
+    // 작업 수행 (따로 close()를 호출할 필요가 없음!)
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
 
