@@ -88,5 +88,63 @@ try (FileOutputStream fos = new FileOutputStream("test.txt")) {
     e.printStackTrace();
 }
 ```
+### java의 참조 타입
+#### Strong Reference
+참조변수가 활성되어있는 경우
+```java
+public static void main(String[] args) {
+    Object obj = new Object();
+    System.gc(); 
+    System.out.println("object = "+object); // gc로 수거되지 않음.
+}
+```
+#### Soft Reference
+java.lang.ref.SoftReference를 이용해 구현한다. JVM 메모리가 부족하면 지워지기 때문에, 캐시 기능으로 사용된다.
+(실제 업무에선 `Ehcache`, `Caffeine` 등의 로컬 캐시 라이브러리를 쓰지.. )
+```java 
+import java.lang.ref.SoftReference;
+
+public static void main(String[] args) {
+   Object obj = new Object();
+   SoftReference<Object> softReference = new SoftReference<>(obj);
+   obj = null; // 참조 해제
+   System.gc();
+   System.out.println("object = " + softReference.get()); // 객체 출력됨.
+}
+```
+#### Weak Reference
+java.lang.ref.WeakReference를 이용해 구현한다. GC가 동작하면 즉시 삭제된다.
+```java
+import java.lang.ref.WeakReference;
+
+public static void main(String[] args) {
+   Object obj = new Object();
+   WeakReference<Object> weakReference = new WeakReference<>(obj);
+   obj = null; // 참조 해제
+   System.gc();
+   System.out.println("object = "+weakReference.get()); // null 출력됨.
+}
+```
+#### Phantom Reference
+객체가 메모리에서 완전히 삭제되기 직전에 알림을 받아 후처리 작업을 할 때만 사용합니다.
+```java
+public static void main(String[] args) {
+        Object obj = new Object();
+        ReferenceQueue<Object> queue = new ReferenceQueue<>();
+        
+        // 팬텀 참조는 반드시 ReferenceQueue와 함께 사용해야 함
+        PhantomReference<Object> phantomRef = new PhantomReference<>(obj, queue);
+        
+        System.out.println("Phantom get(): " + phantomRef.get()); // 항상 null
+
+        obj = null;
+        System.gc();
+        
+        // 객체가 수거되면 큐에 참조 정보가 들어감
+        if (queue.poll() != null) {
+            System.out.println("객체가 삭제됨을 감지하여 후처리 작업을 진행합니다.");
+        }
+    }
+```
 
 
