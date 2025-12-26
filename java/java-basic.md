@@ -146,5 +146,13 @@ public static void main(String[] args) {
         }
     }
 ```
+### Collection, Collections, Map
+| 구분 | Collection | Map | Collections |
+| -- | -- | -- | --|
+| 정체| interface | interface | Utility |
+| 형태 | 집합 | Key-Value | |
+| Sub Class| ArrayList, HashSet, Stack, PriorityQueue| HashMap, TreeMap | |
+> Iterable > Collection > List > ArrayList, LinkedList 
 
+> HashSet은 내부적으로 HashMap으로 구현되어 있다. HashMap의 Key의 중복 방지 기능을 활용한다.
 
