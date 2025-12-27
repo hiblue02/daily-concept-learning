@@ -164,3 +164,51 @@ public static void main(String[] args) {
    1. Fork-Join 방식으로 동작한다.  Steam을 나눠(Fork) 병렬로 실행한 후 합친다(Join).
    2. JVM 공용 스레드 풀을 사용하기 때문에, CPU 코어 갯수 만큼 병렬로 실행한다. (공용 스레드 풀이기 때문에서, 어디선가 스레드풀을 점유하고 있으면 병목이 발생할 수 있다.) 
 
+### JVM  스레드 메모리 영역
+1. 스레드 private 영역
+   1. Stack : 지역변수, 매개변수
+   2. PC register : 현재 스레드의 명령 주소
+   3. Native Method Stack: 자바 외 언어 
+2. 스레드 공용 영역
+   1. Heap: 객체 (동시성 문제)
+   2. Method Area: 클래스, static 변수 정보 
+
+### 공용 스레드 풀
+JVM은 공용으로 사용하기 위한 스레드 풀을 생성해두고 재사용함으로서, 시스템 효율성을 높인다.  (보통 cpu 코어 수 만큼)
+병렬 스트림이나, CompletableFuture를 실행할 때 사용한다. 
+한 스레드가 작업을 종료하면, 다른 스레드의 작업을 훔쳐와서 실행한다. (Work-Stealing)
+
+### GC(Garbage Collection)
+사용하지 않는 객체를 지우는 작업. 주로 Heap 영역에서 동작한다.
+> Eden (객체가 생성됨) > Survivor (살아남음) > Old
+
+객체가 생성된 뒤 다른 곳에서 참조하지 않으면 바로 삭제된다. 여기서 살아남으면 Survivor 영역으로 이동한다.
+Survivor에서도 살아남으면 Old 영역으로 이동한다. 이 동작을 `Minor GC`라고 한다.
+
+Old가 가득차면 `Major GC`(Full GC)가 동작한다. 이 때는 모든 쓰레드 작업이 멈추는 STW(Stop the World)가 동작한다. 
+객체를 옮기는 동안 스레드가 동작하면 작업이 꼬일 수 있기 때문에, 모든 스레드 작업을 멈춘다. 이걸 STW(Stop the World)라고 부른다. 
+
+### GC 알고리즘
+|버전 | 기본 GC       | 핵심 변화 |
+| -- |-------------| -- |
+|Java 8 | Parallel GC |멀티코어를 활용한 대량 처리 중심 |
+|Java 9 | G1 GC       | 기본 GC 변경 (STW 시간 관리 시작) |
+|Java 17 | G1 GC       |G1 GC의 성능 최적화 + ZGC 정식 도입 |
+
+#### G1 GC (Garbage First)
+java 9부터 도입되었다.
+heap 메모리 영역을 `Region` 단위로 나눈다.  Region은  상황에 따라, eden이나 old가 된다. 
+gc가 발생하면 가장 우선 순위가 높은 (쓰레기가 많은) Region을 청소한다. 
+힙 전체를 한번에 청소하지 않기 때문에, STW 시간이 짧다. (200ms 이내)
+#### ZGC 
+java 11부터 도입되었다. 
+어플리케이션 스레드와 GC 작업 스레드가 동시에 동작한다. 
+- Colored Pointer: 객체의 주소값에 사용중/이동중 여부를 표기한다. (이동중이다 = eden에서 old로 이동중이다) 
+- Load Barrier: 스레드가 객체의 참조할 때, Colored Pointer를 사용해 객체가 이동중이면 올바른 주소를 표기해준다. 
+
+> ZGC는 CPU 사용량이 높아(GC 작업 스레드 동시 동작 + 컬러드 포인터와 로드 배리어로 인한 메모리 사용량 증가) 오랜시간 안정성이 검증된 G1GC가 기본이다. 
+
+
+
+
+
