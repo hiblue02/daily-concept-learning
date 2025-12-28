@@ -173,6 +173,18 @@ public static void main(String[] args) {
    1. Heap: 객체 (동시성 문제)
    2. Method Area: 클래스, static 변수 정보 
 
+### 스레드 상태 
+1. `NEW`: 스레드 객체가 생성됨. 
+2. `RUNNABLE`: Thread.start() 호출로 실행 준비 또는 실행 중인 상태 
+3. `BLOCKED`: Synchronized 영역의 Lock을 획득하기 위해 기다리는 상태
+4. `WAITING`: 다른 스레드의 작업 신호를 기다리는 상태 (Object.wait(),  Thread.join())
+5. `TIMED_WAITING`: 일정 시간 대기 (Object.wait(time), Thread.sleep(time))
+6. `TERMINATED`: 스레드 실행이 종료된 상태 (다시 쓸 수 없음)
+
+> Object.wait(): syncronized 블록 안에서 사용되면, 자원의 Lock을 반납하고 대기하는 상태이다. 다른 스레드에서 자원에 접근할 수 있다. 다른 스레드에서 작업을 끝내면, Object.notify() 신호를 보낸다. 
+> 스레드의 상태는 WAITING 또는 TIMED_WAITING이 된다. 
+
+ 
 ### 공용 스레드 풀
 JVM은 공용으로 사용하기 위한 스레드 풀을 생성해두고 재사용함으로서, 시스템 효율성을 높인다.  (보통 cpu 코어 수 만큼)
 병렬 스트림이나, CompletableFuture를 실행할 때 사용한다. 
