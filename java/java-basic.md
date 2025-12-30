@@ -184,6 +184,8 @@ public static void main(String[] args) {
 > Object.wait(): syncronized 블록 안에서 사용되면, 자원의 Lock을 반납하고 대기하는 상태이다. 다른 스레드에서 자원에 접근할 수 있다. 다른 스레드에서 작업을 끝내면, Object.notify() 신호를 보낸다. 
 > 스레드의 상태는 WAITING 또는 TIMED_WAITING이 된다. 
 
+### TODO.. 
+**java.util.concurrent 패키지(예: ReentrantLock, BlockingQueue)**에 대해 알고 싶으신가요?
  
 ### 공용 스레드 풀
 JVM은 공용으로 사용하기 위한 스레드 풀을 생성해두고 재사용함으로서, 시스템 효율성을 높인다.  (보통 cpu 코어 수 만큼)
